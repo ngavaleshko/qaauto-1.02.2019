@@ -39,7 +39,7 @@ public class BadCodeExample {
         System.out.println("Search results count: " + searchResultElements.size());
 
 //for each Webelement in SearchResultElements print text
-        for (WebElement searchResultElement: searchResultElements) {
+        for (WebElement searchResultElement : searchResultElements) {
             String searchResultElementText = searchResultElement.getText();
             System.out.println(searchResultElement.getText());
             if (searchResultElementText.toLowerCase().contains(searchTerm.toLowerCase())) {
@@ -48,3 +48,5 @@ public class BadCodeExample {
                 System.out.println("searchTerm not found");
             }
         }
+    }
+}
