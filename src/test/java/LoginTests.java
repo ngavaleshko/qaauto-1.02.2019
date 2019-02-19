@@ -1,47 +1,92 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LoginTests {
+
     @Test
-    public void negativeLoginTest(){
+    public void negativeLoginTest() {
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.linkedin.com/");
-// LinkedIn: Log In or Sign Up  Assert.assertEquals(actual result, expected res);
-        Assert.assertEquals(driver.getTitle(),"LinkedIn: Log In or Sign Up", "login page title is wrong");
 
-        //        Verify that Login page URL is correct
-        String URL = driver.getCurrentUrl();
-        Assert.assertEquals(URL, "https://www.linkedin.com/", "login page URL is wrong");
+        LandingPage landingPage = new LandingPage(driver);
+        Assert.assertTrue(landingPage.isPageLoaded(),
+                "Landing page is not loaded.");
 
-//        Verify that Login page has 'Sign In' button displayed
-        WebElement signinButton = driver.findElement(By.id("login-submit"));
-        if(signinButton.isDisplayed())
-                {
-                    System.out.println("signinButton is displayed");
-                }
-                else{
-                    System.out.println("signinButton is not displayed");
-                }
-//        Enter 'a@b.c' into userEmail field
-        WebElement loginField= driver.findElement(By.id("login-email"));
-        loginField.click();
-        loginField.clear();
-        loginField.sendKeys("missnatalize@gmail.com");
-//        Enter '' into userPass field (means enter empty String)
-        WebElement passwordField= driver.findElement(By.id("login-email"));
-        passwordField.click();
-        passwordField.clear();
-        passwordField.sendKeys("");
+        landingPage.login("a@b.c", "");
+        Assert.assertTrue(landingPage.isPageLoaded(),
+                "Landing page is not loaded.");
+    }
 
-        WebElement Signin= driver.findElement(By.id("login-email"));
-        Signin.click();
+    @Test
+    public void successfulLoginTest() {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.linkedin.com/");
 
-        String URL1 = driver.getCurrentUrl();
-        Assert.assertEquals(URL1, "https://www.linkedin.com/", "login page URL is correct");
+        LandingPage landingPage = new LandingPage(driver);
+        Assert.assertTrue(landingPage.isPageLoaded(),
+                "Landing page is not loaded.");
+
+        landingPage.login("missnatalize@gmail.com", "Account0000");
+
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isPageLoaded(),
+                "Home page did not load after Login.");
+    }
+
+    @Test
+//    Correct login and incorrect password
+    public void negativeTest2() {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.linkedin.com/");
+
+        LandingPage landingPage = new LandingPage(driver);
+        Assert.assertTrue(landingPage.isPageLoaded(),
+                "Landing page is not loaded.");
+
+        landingPage.login("missnatalize@gmail.com", "rfgyiefgl");
+
+        GuestHome guestHome = new GuestHome(driver);
+        Assert.assertTrue(guestHome.isPageLoaded(),
+                "GuestHome page is not loaded.");
+    }
+
+    @Test
+//    incorrect phone number and incorrect password
+    public void negativeTest3() {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.linkedin.com/");
+
+        LandingPage landingPage = new LandingPage(driver);
+        Assert.assertTrue(landingPage.isPageLoaded(),
+                "Landing page is not loaded.");
+
+        landingPage.login("1234", "1234");
+        GuestHome guestHome = new GuestHome(driver);
+        Assert.assertTrue(guestHome.errorPhoneMessage(),
+                "Phone Error message is not correct");
+    }
+
+    @Test
+//    country
+    public void negativeLoginReturnToTest() {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.linkedin.com/");
+
+        LandingPage landingPage = new LandingPage(driver);
+        Assert.assertTrue(landingPage.isPageLoaded(),
+                "Landing page is not loaded.");
+
+        landingPage.login("missnatalize@gmail.com", "4233666675");
+
+        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(driver);
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(),
+                "Home page did not load after Login.");
+
+        Assert.assertEquals(loginSubmitPage.getPasswordValidationMessageText(),
+                "Hmm, that's not the right password. Please try again or request a new one.",
+                "Wrong Validation message for password fiel ");
 
     }
 }
