@@ -20,14 +20,22 @@ public class LoginTests {
         driver.quit();
     }
 
-    @Test
-    public void negativeLoginTest() {
+    @DataProvider
+    public Object[][] invalidData() {
+        return new Object[][]{
+                {"a@b.c", ""},
+                {"", "Account0000"},
+        };
+    }
+
+    @Test(dataProvider = "invalidData")
+    public void negativeLoginTest(String userEmail, String userPassword) {
 
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
 
-        landingPage.login("a@b.c", "");
+        landingPage.login (userEmail, userPassword);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
     }
@@ -56,53 +64,37 @@ public class LoginTests {
     }
 
 
+    @DataProvider
+    public Object[][] invalidDataAndMessage() {
+        return new Object[][]{
+                {"missnatalize@gmail.com", "4233666675", "Hmm, that's not the right password. Please try again or request a new one.","" },
+                {"missNATALIze1@gmail.com", "Account0000","","Hmm, we don't recognize that email. Please try again."},
 
-    @Test
-//    Correct login and incorrect password
-    public void negativeTest2() {
-
-        LandingPage landingPage = new LandingPage(driver);
-        Assert.assertTrue(landingPage.isPageLoaded(),
-                "Landing page is not loaded.");
-
-        landingPage.login("missnatalize@gmail.com", "rfgyiefgl");
-
-        GuestHome guestHome = new GuestHome(driver);
-        Assert.assertTrue(guestHome.isPageLoaded(),
-                "GuestHome page is not loaded.");
+        };
     }
 
-    @Test
-//    incorrect phone number and incorrect password
-    public void negativeTest3() {
+    @Test(dataProvider = "invalidDataAndMessage")
+    public void negativeLoginReturnToTest(String userEmail,
+                                          String userPassword,
+                                          String passwordValidationMessage,
+                                          String emailValidationMessage) {
 
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
 
-        landingPage.login("1234", "1234");
-        GuestHome guestHome = new GuestHome(driver);
-        Assert.assertTrue(guestHome.errorPhoneMessage(),
-                "Phone Error message is not correct");
-    }
-
-    @Test
-//    country
-    public void negativeLoginReturnToTest() {
-
-        LandingPage landingPage = new LandingPage(driver);
-        Assert.assertTrue(landingPage.isPageLoaded(),
-                "Landing page is not loaded.");
-
-        landingPage.login("missnatalize@gmail.com", "4233666675");
+        landingPage.login(userEmail, userPassword);
 
         LoginSubmitPage loginSubmitPage = new LoginSubmitPage(driver);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(),
                 "Home page did not load after Login.");
 
         Assert.assertEquals(loginSubmitPage.getPasswordValidationMessageText(),
-                "Hmm, that's not the right password. Please try again or request a new one.",
-                "Wrong Validation message for password fiel ");
+                passwordValidationMessage,
+                "Wrong Validation message for password field ");
 
+        Assert.assertEquals(loginSubmitPage.getEmailValidationMessageText(),
+                emailValidationMessage,
+                "Wrong Validation message for email field ");
     }
 }

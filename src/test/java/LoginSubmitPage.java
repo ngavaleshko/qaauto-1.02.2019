@@ -30,4 +30,8 @@ public class LoginSubmitPage {
     public String getPasswordValidationMessageText() {
         return passwordValidationMessage.getText();
     }
+
+    public String getEmailValidationMessageText() {
+        return emailValidationMessage.getText();
+    }
 }
