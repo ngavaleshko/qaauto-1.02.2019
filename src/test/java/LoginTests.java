@@ -8,11 +8,13 @@ import org.testng.annotations.Test;
 
 public class LoginTests {
     WebDriver driver;
+    LandingPage landingPage;
 
     @BeforeMethod
     public void beforeMethod() {
         driver = new ChromeDriver();
         driver.get("https://www.linkedin.com/");
+        landingPage = new LandingPage(driver);
     }
 
     @AfterMethod
@@ -31,11 +33,10 @@ public class LoginTests {
     @Test(dataProvider = "invalidData")
     public void negativeLoginTest(String userEmail, String userPassword) {
 
-        LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
 
-        landingPage.login (userEmail, userPassword);
+        landingPage.loginToLandingPage (userEmail, userPassword);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
     }
@@ -44,21 +45,19 @@ public class LoginTests {
     public Object[][] validData() {
         return new Object[][]{
                 {"missnatalize@gmail.com", "Account0000"},
-                {"missNATALIze@gmail.com", "Account0000"},
-                {" missnatalize@gmail.com", "Account0000"}
+//                {"missNATALIze@gmail.com", "Account0000"},
+//                {" missnatalize@gmail.com", "Account0000"}
         };
     }
 
     @Test(dataProvider = "validData")
     public void successfulLoginTest(String userEmail, String userPassword) {
 
-        LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
 
-        landingPage.login(userEmail, userPassword);
+        HomePage homePage = landingPage.login(userEmail, userPassword);
 
-        HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isPageLoaded(),
                 "Home page did not load after Login.");
     }
@@ -79,13 +78,11 @@ public class LoginTests {
                                           String passwordValidationMessage,
                                           String emailValidationMessage) {
 
-        LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
 
-        landingPage.login(userEmail, userPassword);
+      LoginSubmitPage loginSubmitPage = landingPage.loginToLoginSubmitPage(userEmail, userPassword);
 
-        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(driver);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(),
                 "Home page did not load after Login.");
 
