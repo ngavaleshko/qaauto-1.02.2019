@@ -1,26 +1,12 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+package test;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import page.HomePage;
+import page.LoginSubmitPage;
 
-public class LoginTests {
-    WebDriver driver;
-    LandingPage landingPage;
-
-    @BeforeMethod
-    public void beforeMethod() {
-        driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
-        landingPage = new LandingPage(driver);
-    }
-
-    @AfterMethod
-    public void afterMethod() {
-        driver.quit();
-    }
+public class LoginTests extends BaseTest {
 
     @DataProvider
     public Object[][] invalidData() {
@@ -36,7 +22,7 @@ public class LoginTests {
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
 
-        landingPage.loginToLandingPage (userEmail, userPassword);
+        landingPage.login (userEmail, userPassword);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
     }
@@ -52,12 +38,10 @@ public class LoginTests {
 
     @Test(dataProvider = "validData")
     public void successfulLoginTest(String userEmail, String userPassword) {
-
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
 
         HomePage homePage = landingPage.login(userEmail, userPassword);
-
         Assert.assertTrue(homePage.isPageLoaded(),
                 "Home page did not load after Login.");
     }
@@ -81,7 +65,7 @@ public class LoginTests {
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
 
-      LoginSubmitPage loginSubmitPage = landingPage.loginToLoginSubmitPage(userEmail, userPassword);
+      LoginSubmitPage loginSubmitPage = landingPage.login(userEmail, userPassword);
 
         Assert.assertTrue(loginSubmitPage.isPageLoaded(),
                 "Home page did not load after Login.");
