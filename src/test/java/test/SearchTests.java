@@ -16,7 +16,7 @@ public class SearchTests extends BaseTest {
         String userEmail = "missnatalize@gmail.com";
         String userPassword = "Account0000";
         String searchTerm = "HR";
-        int searchResultElements = 8;
+        int searchResultElements = 10;
 
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
@@ -32,13 +32,15 @@ public class SearchTests extends BaseTest {
 
         //List<WebElement> results = driver.findElements(By.xpath("//*[@class='search-result__wrapper']"));
         List<WebElement> results = searchPage.searchResultElements;
+
         JavascriptExecutor jsx = (JavascriptExecutor)driver;
-        jsx.executeScript("window.scrollBy(0,250)", "");
+        jsx.executeScript("window.scrollBy(0,1750)", "");
         Thread.sleep(4000);
+
         Assert.assertEquals(results.size(),searchResultElements,"Numbers of search results isn't valid");
 
         for (WebElement result : results) {
-            Assert.assertTrue(result.getText().contains("HR"), "Result does not contain HR.");
+            Assert.assertTrue(result.getText().toLowerCase().contains(searchTerm.toLowerCase()), "Result does not contain HR.");
         }
 
     }
