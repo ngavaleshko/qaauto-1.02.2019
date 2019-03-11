@@ -22,6 +22,9 @@ public class LandingPage {
     @FindBy (xpath = "//input[@id='login-password']")
     private WebElement userPasswordField;
 
+    @FindBy (xpath = "//a[contains(@class, 'link-forgot-password')]")
+    private WebElement linkForgotPassword;
+
     /**
      * Constructor for Landing Page.
      * @param driver  - WebDriver instance from BaseTest.
@@ -44,6 +47,11 @@ public class LandingPage {
         else{
             return (T) new LandingPage(driver);
         }
+    }
+
+    public RequestPasswordResetPage clickOnForgotPasswordBtn () {
+        linkForgotPassword.click();
+        return new RequestPasswordResetPage(driver);
     }
 
 
