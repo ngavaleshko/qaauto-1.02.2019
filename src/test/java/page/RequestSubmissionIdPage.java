@@ -28,13 +28,13 @@ public class RequestSubmissionIdPage {
                 && driver.getCurrentUrl().contains("requestSubmissionId")
                 && driver.getTitle().equals("Reset Password | LinkedIn");
     }
-    public PasswordResetSubmitPage clickOnResetPasswordSubmitButton(newUserPassword) {
-        newPasswordField.click();
-        newPasswordField.sendKeys(newUserPassword);
-        newPasswordConfirmField.click();
-        newPasswordConfirmField.sendKeys(newPasswordField);
-        resetPasswordSubmitButton.submit();
-        return new PasswordResetSubmitPage(driver);
+//    public PasswordResetSubmitPage clickOnResetPasswordSubmitButton(newUserPassword) {
+//        newPasswordField.click();
+//        newPasswordField.sendKeys(newUserPassword);
+//        newPasswordConfirmField.click();
+//        newPasswordConfirmField.sendKeys(newPasswordField);
+//        resetPasswordSubmitButton.submit();
+//        return new PasswordResetSubmitPage(driver);
 }
 
 ///////rgrlegkjiwhgoihwerghqwoueghewh rghut4qhui GOVNO CODe
