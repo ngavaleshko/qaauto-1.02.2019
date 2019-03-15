@@ -11,6 +11,9 @@ public class CheckpointPage {
     @FindBy(xpath ="//*[@id='resend-url']")
     private WebElement resendLinkButton;
 
+    @FindBy(xpath = "//*[@class=\'different__email different__email--desktop\']")
+    private WebElement tryDifferentEmailBtn;
+
     public CheckpointPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -21,4 +24,5 @@ public class CheckpointPage {
                 && driver.getCurrentUrl().contains("/checkpoint/");
 //                && driver.getTitle().equals("Please check your mail for reset password link.  | LinkedIn");
     }
+
 }

@@ -3,8 +3,7 @@ package test;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import page.CheckpointPage;
-import page.RequestPasswordResetPage;
+import page.*;
 
 public class ForgotPasswordTest extends BaseTest {
 
@@ -15,6 +14,11 @@ public class ForgotPasswordTest extends BaseTest {
         return new Object[][]{
                 {"missnatalize@gmail.com"}
         };
+    }
+    public Object[][] newUserPassword() {
+            return new Object[][]{
+                    {"Account0000"}
+            };
     }
 
     @Test (dataProvider = "validEmail")
@@ -28,9 +32,22 @@ public class ForgotPasswordTest extends BaseTest {
         Thread.sleep(4000);
         Assert.assertTrue(checkpointPage.isPageLoaded(),
                 "checkpoint Page did not load.");
+
         Thread.sleep(120000);
 
-        RequestSubmissionIdPage requestSubmissionIdPage=new RequestSubmissionIdPage
+    }
+        @Test (dataProvider = "newUserPassword")
+
+
+        public void SecondPart(String newPasswordField)
+
+        RequestSubmissionIdPage requestSubmissionIdPage = new RequestSubmissionIdPage;
+        Assert.assertTrue(requestSubmissionIdPage.isPageLoaded(),
+                "Request Submission Id Page did not load.");
+
+        PasswordResetSubmitPage passwordResetSubmitPage = requestSubmissionIdPage.clickOnResetPasswordSubmitButton();
+        Assert.assertTrue(requestSubmissionIdPage.isPageLoaded(),
+                "Password Reset SubmitPage did not load.");
         }
 
     }
