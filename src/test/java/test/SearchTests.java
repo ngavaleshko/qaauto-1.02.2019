@@ -32,7 +32,7 @@ public class SearchTests extends BaseTest {
         String userEmail = "missnatalize@gmail.com";
         String userPassword = "Account0000";
         String searchTerm = "HR";
-
+//        int searchResultElements = 10;
 
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded.");
