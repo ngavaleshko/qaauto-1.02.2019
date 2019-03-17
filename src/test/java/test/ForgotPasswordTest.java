@@ -8,7 +8,7 @@ public class ForgotPasswordTest extends BaseTest {
 
     @Test
     public void forgotPasswordTest() {
-        String userEmail = "missnatalize@gmail.com";
+        String userEmail = "signnow.tutorial@gmail.com";
 
         RequestPasswordResetPage requestPasswordResetPage = landingPage.clickOnForgotPasswordBtn();
 
@@ -17,13 +17,25 @@ public class ForgotPasswordTest extends BaseTest {
 
             requestPasswordResetPage.findAccount(userEmail);
 
-//        RequestSubmissionIdPage requestSubmissionIdPage = new RequestSubmissionIdPage;
-//        Assert.assertTrue(requestSubmissionIdPage.isPageLoaded(),
-//                "Request Submission Id Page did not load.");
+        PasswordResetSubmitPage passwordResetSubmitPage = new PasswordResetSubmitPage(driver);
+
+         Assert.assertTrue(passwordResetSubmitPage.isPageLoaded(),
+              "passwordResetSubmitPage did not load.");
+
+
+//        String newUserPassword = "Account0000";
+//        String newPasswordConfirm = "Account0000";
 //
-//        PasswordResetSubmitPage passwordResetSubmitPage = requestSubmissionIdPage.clickOnResetPasswordSubmitButton();
-//        Assert.assertTrue(requestSubmissionIdPage.isPageLoaded();
-//                "Password Reset SubmitPage did not load.");
+//        RequestSubmissionIdPage requestSubmissionIdPage =new RequestSubmissionIdPage(driver);
+//        Assert.assertTrue(requestSubmissionIdPage.isPageLoaded(),
+//                "RequestSubmissionIdPage did not load.");
+//
+//        GoToHomePage goToHomePage = RequestSubmissionIdPage.enterNewPassword(newUserPassword,newPasswordConfirm);
+//
+//        Assert.assertTrue(goToHomePage.isPageLoaded(),
+//                "goToHomePage did not load.");
+
+
     }
 }
 

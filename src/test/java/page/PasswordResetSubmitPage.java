@@ -8,11 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 public class PasswordResetSubmitPage {
     private WebDriver driver;
 
-    @FindBy(xpath = "//*[@id ='reset-password-submit-button']")
-    private WebElement resetPasswordSubmitButton;
+    @FindBy(xpath = "//*[@id ='resend-url']")
+    private WebElement resendLinkBtn;
 
-    @FindBy(xpath = "//*[@id ='username']")
-    private WebElement enterYourEmailOrPhone;
 
     public PasswordResetSubmitPage(WebDriver driver) {
         this.driver = driver;
@@ -21,7 +19,7 @@ public class PasswordResetSubmitPage {
     }
 
     public boolean isPageLoaded() {
-        return resetPasswordSubmitButton.isDisplayed()
-                && driver.getCurrentUrl().contains("/password-reset-submit");
+        return resendLinkBtn.isDisplayed()
+                && driver.getCurrentUrl().contains("/request-password-reset-submit");
     }
 }
