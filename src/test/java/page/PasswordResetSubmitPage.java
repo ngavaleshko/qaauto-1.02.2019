@@ -5,8 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class PasswordResetSubmitPage {
-    private WebDriver driver;
+public class PasswordResetSubmitPage extends BasePage {
 
     @FindBy(xpath = "//*[@id ='resend-url']")
     private WebElement resendLinkBtn;
@@ -16,6 +15,11 @@ public class PasswordResetSubmitPage {
         this.driver = driver;
         PageFactory.initElements(driver, this);
 
+    }
+
+    public RequestSubmissionIdPage navigateToLinkFromEmail() {
+        driver.get(resetPasswordUrl);
+        return new RequestSubmissionIdPage(driver);
     }
 
     public boolean isPageLoaded() {

@@ -9,33 +9,28 @@ public class ForgotPasswordTest extends BaseTest {
     @Test
     public void forgotPasswordTest() {
         String userEmail = "signnow.tutorial@gmail.com";
+        String newUserPassword = "Account0000";
 
         RequestPasswordResetPage requestPasswordResetPage = landingPage.clickOnForgotPasswordBtn();
-
         Assert.assertTrue(requestPasswordResetPage.isPageLoaded(),
                 "Request PasswordReset Page did not load.");
 
-            requestPasswordResetPage.findAccount(userEmail);
+        PasswordResetSubmitPage passwordResetSubmitPage = requestPasswordResetPage.findAccount(userEmail);
 
-        PasswordResetSubmitPage passwordResetSubmitPage = new PasswordResetSubmitPage(driver);
-
-         Assert.assertTrue(passwordResetSubmitPage.isPageLoaded(),
+        Assert.assertTrue(passwordResetSubmitPage.isPageLoaded(),
               "passwordResetSubmitPage did not load.");
 
+        RequestSubmissionIdPage requestSubmissionIdPage = passwordResetSubmitPage.navigateToLinkFromEmail();
+        Assert.assertTrue(requestSubmissionIdPage.isPageLoaded(),
+                "RequestSubmissionIdPage did not load.");
 
-//        String newUserPassword = "Account0000";
-//        String newPasswordConfirm = "Account0000";
-//
-//        RequestSubmissionIdPage requestSubmissionIdPage =new RequestSubmissionIdPage(driver);
-//        Assert.assertTrue(requestSubmissionIdPage.isPageLoaded(),
-//                "RequestSubmissionIdPage did not load.");
-//
-//        GoToHomePage goToHomePage = RequestSubmissionIdPage.enterNewPassword(newUserPassword,newPasswordConfirm);
-//
-//        Assert.assertTrue(goToHomePage.isPageLoaded(),
-//                "goToHomePage did not load.");
+        GoToHomePage goToHomePage = requestSubmissionIdPage.enterNewPassword(newUserPassword,newUserPassword);
+        Assert.assertTrue(goToHomePage.isPageLoaded(),
+                "goToHomePage did not load.");
 
-
+        HomePage homePage= goToHomePage.returnToHomePage();
+        Assert.assertTrue(homePage.isPageLoaded(),
+        "YOU DID NOT GET HOME PAGE");
     }
 }
 

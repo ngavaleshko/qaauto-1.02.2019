@@ -5,8 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class RequestSubmissionIdPage {
-    private WebDriver driver;
+public class RequestSubmissionIdPage extends BasePage {
 
     @FindBy(xpath = "//*[@id=\'newPassword\']")
     private WebElement newPasswordField;
@@ -29,12 +28,12 @@ public class RequestSubmissionIdPage {
                 && driver.getTitle().equals("Reset Password | LinkedIn");
     }
 
-    public RequestSubmissionIdPage enterNewPassword(String newUserPassword, String newPasswordConfirm) {
+    public GoToHomePage enterNewPassword(String newUserPassword, String newPasswordConfirm) {
         newPasswordField.click();
         newPasswordField.sendKeys(newUserPassword);
         newPasswordConfirmField.click();
         newPasswordConfirmField.sendKeys(newPasswordConfirm);
         resetPasswordSubmitButton.submit();
-        return new RequestSubmissionIdPage(driver);
+        return new GoToHomePage(driver);
     }
 }

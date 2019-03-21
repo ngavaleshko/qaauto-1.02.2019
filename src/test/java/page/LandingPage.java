@@ -9,9 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Page Object class  for Landing page (переменные классы методы)
  */
-public class LandingPage {
-
-    private WebDriver driver;
+public class LandingPage extends BasePage  {
 
     @FindBy (xpath ="//input[@id='login-submit']")
     private WebElement signInButton;
