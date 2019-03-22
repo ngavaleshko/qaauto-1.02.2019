@@ -32,6 +32,13 @@ public class LandingPage extends BasePage  {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     *Generic method
+     * @param userEmail Variations of Linkedin User Email  for testing reasons
+     * @param userPassword Variations of Linkedin User Passwords  for testing reasons
+     * @param <T> Generic method - checks what page is return
+     * @return return result depending from T
+     */
     public <T> T login(String userEmail, String userPassword) {
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
@@ -58,6 +65,9 @@ public class LandingPage extends BasePage  {
                 && driver.getTitle().equals("LinkedIn: Log In or Sign Up");
     }
 
+    /**
+     * @return method for clicking the link: Forgot password
+     */
     public RequestPasswordResetPage clickOnForgotPasswordBtn() {
         forgotPasswordLink.click();
         return new RequestPasswordResetPage(driver);

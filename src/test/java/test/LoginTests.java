@@ -56,6 +56,13 @@ public class LoginTests extends BaseTest {
         };
     }
 
+    /**
+     * Method that provide negative tests
+     * @param userEmail Email for testing
+     * @param userPassword password for testing
+     * @param passwordValidationMessage password validation message
+     * @param emailValidationMessage email validation message
+     */
     @Test(dataProvider = "invalidDataAndMessage")
     public void negativeLoginReturnToTest(String userEmail,
                                           String userPassword,
